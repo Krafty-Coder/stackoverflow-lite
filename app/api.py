@@ -71,7 +71,7 @@ class Login(Resource):
 
 
 class AllQuestionsAPI(Resource):
-    '''Api for the questions posted'''
+    '''Api for creating the questions'''
     def post(self):
         '''API method for creating a question'''
         title = request.get_json()['title']
@@ -87,6 +87,18 @@ class AllQuestionsAPI(Resource):
         else:
             error = 'Please input content into your title and description field'
             return jsonify({'message': error})
+
+    '''Api for the questions posted'''
+    def get(self):
+        result = cur.execute("SELECT * FROM questions;")
+        questions = cur.fetchall()
+
+        if questions:
+            return jsonify(questions)
+        else:
+            error = 'No questions in the database'
+            return {'message': error}
+
 
 
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
