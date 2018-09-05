@@ -178,5 +178,13 @@ class AnswerAPI(Resource):
 
 
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
+api.add_resource(AllQuestionsAPI, '/api/v1/questions', endpoint = 'questions')
+api.add_resource(QuestionAPI, '/api/v1/questions/<int:id>', endpoint='question')
+api.add_resource(AllAnswersAPI, '/api/v1/answers/', endpoint = 'answers')
+api.add_resource(AnswerAPI, '/api/v1/answer/<int:id>', endpoint = 'answer')
+api.add_resource(Register, '/api/v1/auth/register')
+api.add_resource(Login, '/api/v1/auth/login')
 if __name__ == '__main__':
     app.run(debug=True)
+
+
