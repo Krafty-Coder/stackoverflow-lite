@@ -135,6 +135,48 @@ class QuestionAPI(Resource):
         return {'message': success}
 
 
+class AllAnswersAPI(Resource):
+    '''Api for the answers given to a particular question'''
+    def get(self, id):
+        cur.execute('SELECT * FROM answers WHERE id={}'.format(id))
+        result = cur.fetchone()
+        result = result
+        success = 'answers to the answers are the following'
+        return jsonify ({'message': success}, { result } )
+
+
+class AnswerAPI(Resource):
+    decorators  = [auth.login_required]
+    '''Api for getting a particular answer to a question'''
+    def get(self, id):
+        '''API method for getting an answer'''
+        cur.execute('SELECT * FROM answers WHERE id={}'.format(id))
+        answer = cur.fetchone()
+        success = 'Answer retrived successfully'
+        return jsonify ({'message': success}, { answer })
+
+    def put(self, id):
+        '''API method for updating an answer'''
+        cur.execute('SELECT * FROM answers WHERE id = {}'.format(id))
+        result = cur.fetchone()
+        title = request.get_json()['title']
+        description = request.get_json()['description']
+        cur.execute(
+            "UPDATE answer SET title={}, description={} WHERE id={}".format(
+                title, description, id))
+        conn.commit()
+        success = 'Successfully edited your answer'
+        return { 'message': success }
+
+    def delete(self, id):
+        '''API method for deleting an answer'''
+        cur.execute('DELETE FROM answers WHERE id = {}'.format(id))
+        conn.commit()
+        success = 'Successfully deleted your answer'
+        return { 'message': success }
+
+
+
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
 api.add_resource(AllQuestionsAPI, '/api/v1/questions', endpoint = 'questions')
 api.add_resource(QuestionAPI, '/api/v1/questions/<int:id>', endpoint='question')
