@@ -135,6 +135,16 @@ class QuestionAPI(Resource):
         return {'message': success}
 
 
+class AllAnswersAPI(Resource):
+    '''Api for the answers given to a particular question'''
+    def get(self, id):
+        cur.execute('SELECT * FROM answers WHERE id={}'.format(id))
+        result = cur.fetchone()
+        result = result
+        success = 'answers to the answers are the following'
+        return jsonify ({'message': success}, { result } )
+
+
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
 if __name__ == '__main__':
     app.run(debug=True)
