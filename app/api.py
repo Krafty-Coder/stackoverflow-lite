@@ -39,6 +39,24 @@ class Register(Resource):
         return jsonify ({ 'message': success })
 
 
+class AllQuestionsAPI(Resource):
+    '''Api for the questions posted'''
+    def post(self):
+        '''API method for creating a question'''
+        title = request.get_json()['title']
+        description = request.get_json()['description']
+        if title and description:
+            cur.execute(
+                "INSERT INTO questions(title, description) VALUES(%s, %s)",
+                (title,
+                 description))
+            conn.commit()
+            success = 'Your question was successfully added into the database'
+            return jsonify({'message': success})
+        else:
+            error = 'Please input content into your title and description field'
+            return jsonify({'message': error})
+
 
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
 if __name__ == '__main__':
