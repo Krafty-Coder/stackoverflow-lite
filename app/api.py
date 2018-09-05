@@ -17,6 +17,27 @@ class Home(Resource):
         return jsonify({'message': 'Stackoverflow-lite, the alternate app if they get to hack Stackoverflow *.* '})
 
 
+class Register(Resource):
+    def post(self):
+        name = request.get_json()['name' ]
+        email = request.get_json()['email']
+        username = request.get_json()['username']
+        password = request.get_json()['password']
+
+        cur.execute(
+            "INSERT INTO users(name, email, username, password) VALUES(%s, %s, %s, %s)",
+            (name,
+             email,
+             username,
+             password))
+
+        conn.commit()
+
+        # Close Connection
+        cur.close()
+        success = 'Sucessfully registered you may now log in with your username and password'
+        return jsonify ({ 'message': success })
+
 
 class AllQuestionsAPI(Resource):
     '''Api for the questions posted'''
@@ -35,7 +56,6 @@ class AllQuestionsAPI(Resource):
         else:
             error = 'Please input content into your title and description field'
             return jsonify({'message': error})
-
 
 
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
