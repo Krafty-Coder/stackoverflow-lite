@@ -135,6 +135,16 @@ class QuestionAPI(Resource):
         return {'message': success}
 
 
+class AllAnswersAPI(Resource):
+    '''Api for the answers given to a particular question'''
+    def get(self, id):
+        cur.execute('SELECT * FROM answers WHERE id={}'.format(id))
+        result = cur.fetchone()
+        result = result
+        success = 'answers to the answers are the following'
+        return jsonify ({'message': success}, { result } )
+
+
 class AnswerAPI(Resource):
     decorators  = [auth.login_required]
     '''Api for getting a particular answer to a question'''
@@ -164,6 +174,7 @@ class AnswerAPI(Resource):
         conn.commit()
         success = 'Successfully deleted your answer'
         return { 'message': success }
+
 
 
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
