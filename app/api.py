@@ -39,6 +39,37 @@ class Register(Resource):
         return jsonify ({ 'message': success })
 
 
+class Login(Resource):
+    def post(self):
+        username = request.get_json()['username']
+        password_candidate = request.get_json()['password']
+
+        result = cur.execute(
+            "SELECT * FROM users WHERE username = %s",
+            [username])
+
+        if result > 0:
+            # Get stored hash
+            data = cur.fetchone()
+            password = data['password']
+
+            # Compare Passwords
+            cur.close()
+            if sha256_crypt.verify(password_candidate, password):
+                # Password and username matches
+                session['logged_in'] = True
+                session['username'] = username
+                success = 'Successfully logged in'
+                return {'message': success}
+
+            else:
+                error = 'Password or username incorrect, Invalid login'
+                return {'message': error}
+        else:
+            error = "Username not found"
+            return {'message': error}
+
+
 class AllQuestionsAPI(Resource):
     '''Api for the questions posted'''
     def post(self):
