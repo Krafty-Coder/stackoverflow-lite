@@ -71,7 +71,7 @@ class Login(Resource):
 
 
 class AllQuestionsAPI(Resource):
-    '''Api for the questions posted'''
+    '''Api for creating the questions'''
     def post(self):
         '''API method for creating a question'''
         title = request.get_json()['title']
@@ -87,6 +87,52 @@ class AllQuestionsAPI(Resource):
         else:
             error = 'Please input content into your title and description field'
             return jsonify({'message': error})
+
+    '''Api for the questions posted'''
+    def get(self):
+        result = cur.execute("SELECT * FROM questions;")
+        questions = cur.fetchall()
+
+        if questions:
+            return jsonify(questions)
+        else:
+            error = 'No questions in the database'
+            return {'message': error}
+
+
+class QuestionAPI(Resource):
+    # decorators  = [auth.login_required]
+    '''Api for getting a particular question'''
+    def get(self, id):
+        '''API method for getting a question'''
+        cur.execute('SELECT * FROM questions WHERE id={}'.format(id))
+        question = cur.fetchone()
+        # cur.close()
+        if question:
+            return jsonify(question)
+        else:
+            error = "No question with that id exists"
+            return jsonify({"message": error})
+
+    def put(self, id):
+        '''API method for updating a question'''
+        cur.execute("SELECT * FROM articles WHERE id = {}".format(id))
+        question =  cur.fetchone()
+        title = request.get_json()['title']
+        description = request.get_json()['description']
+        cur.execute(
+            "UPDATE question SET title={}, description={} WHERE id={}".format(
+                title, description, id))
+        conn.commit()
+        success = 'Question updated successfully'
+        return jsonify({'message': success})
+
+    def delete(self, id):
+        '''API method for deleting a question'''
+        cur.execute("DELETE FROM questions WHERE id = {}".format(id))
+        conn.commit()
+        success = 'Deleted the question successfully'
+        return {'message': success}
 
 
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
