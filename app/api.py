@@ -176,6 +176,27 @@ class AnswerAPI(Resource):
         return { 'message': success }
 
 
+class AllCommentsAPI(Resource):
+    '''Api for the comments posted per post'''
+    def get(self, id):
+        pass
+
+
+class CommentAPI(Resource):
+    decorators  = [auth.login_required]
+    '''Api for getting a particular comment to an answer of a question'''
+    def get(self, id):
+        '''API method for getting a comment'''
+        pass
+
+    def put(self, id):
+        '''API method for updating a comment'''
+        pass
+
+    def delete(self, id):
+        '''API method for deleting a comment'''
+        pass
+
 
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
 api.add_resource(AllQuestionsAPI, '/api/v1/questions', endpoint = 'questions')
