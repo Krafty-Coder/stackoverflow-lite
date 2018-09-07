@@ -1,0 +1,27 @@
+[[source]]
+
+verify_ssl = true
+url = "https://pypi.python.org/simple"
+name = "pypi"
+
+
+[packages]
+
+"aniso8601" = "==3.0.2"
+click = "==6.7"
+flask = "==1.0.2"
+flask-httpauth = "==3.2.4"
+flask-restful = "==0.3.6"
+itsdangerous = "==0.24"
+"jinja2" = "==2.10"
+markupsafe = "==1.0"
+passlib = "==1.7.1"
+"psycopg2" = "==2.7.5"
+pytz = "==2018.5"
+werkzeug = "==0.14.1"
+gunicorn = "==19.9.0"
+"psycopg2-binary" = "*"
+
+
+[dev-packages]
+
