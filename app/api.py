@@ -199,7 +199,7 @@ class CommentAPI(Resource):
         pass
 
 
-api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
+api.add_resource(Home, '/', endpoint = 'homepage')
 api.add_resource(AllQuestionsAPI, '/api/v1/questions', endpoint = 'questions')
 api.add_resource(QuestionAPI, '/api/v1/questions/<int:id>', endpoint='question')
 api.add_resource(AllAnswersAPI, '/api/v1/answers/', endpoint = 'answers')
