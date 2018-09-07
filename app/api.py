@@ -71,7 +71,18 @@ class Login(Resource):
 
 
 class AllQuestionsAPI(Resource):
-    '''Api for creating the questions'''
+    '''Api for the questions posted'''
+    def get(self):
+        result = cur.execute("SELECT * FROM questions;")
+        questions = cur.fetchall()
+
+        if questions:
+            return jsonify(questions)
+        else:
+            error = 'No questions in the database'
+            return {'message': error}
+
+
     def post(self):
         '''API method for creating a question'''
         title = request.get_json()['title']
@@ -87,17 +98,6 @@ class AllQuestionsAPI(Resource):
         else:
             error = 'Please input content into your title and description field'
             return jsonify({'message': error})
-
-    '''Api for the questions posted'''
-    def get(self):
-        result = cur.execute("SELECT * FROM questions;")
-        questions = cur.fetchall()
-
-        if questions:
-            return jsonify(questions)
-        else:
-            error = 'No questions in the database'
-            return {'message': error}
 
 
 class QuestionAPI(Resource):
@@ -135,6 +135,77 @@ class QuestionAPI(Resource):
         return {'message': success}
 
 
+class AllAnswersAPI(Resource):
+    '''Api for the answers given to a particular question'''
+    def get(self, id):
+        cur.execute('SELECT * FROM answers WHERE id={}'.format(id))
+        result = cur.fetchone()
+        result = result
+        success = 'answers to the answers are the following'
+        return jsonify ({'message': success}, { result } )
+
+
+class AnswerAPI(Resource):
+    decorators  = [auth.login_required]
+    '''Api for getting a particular answer to a question'''
+    def get(self, id):
+        '''API method for getting an answer'''
+        cur.execute('SELECT * FROM answers WHERE id={}'.format(id))
+        answer = cur.fetchone()
+        success = 'Answer retrived successfully'
+        return jsonify ({'message': success}, { answer })
+
+    def put(self, id):
+        '''API method for updating an answer'''
+        cur.execute('SELECT * FROM answers WHERE id = {}'.format(id))
+        result = cur.fetchone()
+        title = request.get_json()['title']
+        description = request.get_json()['description']
+        cur.execute(
+            "UPDATE answer SET title={}, description={} WHERE id={}".format(
+                title, description, id))
+        conn.commit()
+        success = 'Successfully edited your answer'
+        return { 'message': success }
+
+    def delete(self, id):
+        '''API method for deleting an answer'''
+        cur.execute('DELETE FROM answers WHERE id = {}'.format(id))
+        conn.commit()
+        success = 'Successfully deleted your answer'
+        return { 'message': success }
+
+
+
+class AllCommentsAPI(Resource):
+    '''Api for the comments posted per post'''
+    def get(self, id):
+        pass
+
+
+class CommentAPI(Resource):
+    decorators  = [auth.login_required]
+    '''Api for getting a particular comment to an answer of a question'''
+    def get(self, id):
+        '''API method for getting a comment'''
+        pass
+
+    def put(self, id):
+        '''API method for updating a comment'''
+        pass
+
+    def delete(self, id):
+        '''API method for deleting a comment'''
+        pass
+
+
 api.add_resource(Home, '/api/v1/', endpoint = 'homepage')
+api.add_resource(AllQuestionsAPI, '/api/v1/questions', endpoint = 'questions')
+api.add_resource(QuestionAPI, '/api/v1/questions/<int:id>', endpoint='question')
+api.add_resource(AllAnswersAPI, '/api/v1/answers/', endpoint = 'answers')
+api.add_resource(AnswerAPI, '/api/v1/answer/<int:id>', endpoint = 'answer')
+api.add_resource(Register, '/api/v1/auth/register')
+api.add_resource(Login, '/api/v1/auth/login')
 if __name__ == '__main__':
     app.run(debug=True)
+
