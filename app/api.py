@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request, session, render_template
 from flask_restful import Resource, Api
+from flask_cors import CORS
 from app.models import *
 from flask_httpauth import HTTPBasicAuth
 from passlib.hash import sha256_crypt
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app)
 auth = HTTPBasicAuth()
 
