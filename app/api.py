@@ -8,7 +8,6 @@ from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 auth = HTTPBasicAuth()
 
