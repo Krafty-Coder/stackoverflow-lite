@@ -1,0 +1,7 @@
+localhostche__/
+__pycache__/
+app/__init__.pyc
+app/__pycache__/
+app/api.pyc
+config.pyc
+

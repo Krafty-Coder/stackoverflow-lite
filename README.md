@@ -9,33 +9,29 @@ be secured with JWT.
 
 ### How to contribute
 
-  Fork it
+Fork it
 Create your feature branch (git checkout -b my-new-feature)
-  Commit your changes (git commit -am 'add some feature')
+Commit your changes (git commit -am 'add some feature')
 Push to the branch (git push origin my-new-feature)
-  Create a new pull request
-  I will review and merge if its good
+Create a new pull request
+I will review and merge if its good
 
 ## Working with the project locally
 
-  ```
-  git clone https://github.com/Krafty-Coder/stackoverflow-lite.git
-  ```
+```
+git clone https://github.com/Krafty-Coder/stackoverflow-lite.git
+```
 
-  Work on the issue you've chosen
+Work on the issue you've chosen
 
-  ```
-  git remote add origin <link_to_your_repository>
+```
+git remote add origin <link_to_your_repository>
 
-  git push origin <your-branch-name> 
-  ```
+git push origin <your-branch-name> 
+```
 
-  *after that*
+*after that*
 
-  go to the project you forked,
-  make a pull request
-
-
-
-
+go to the project you forked,
+make a pull request
 
