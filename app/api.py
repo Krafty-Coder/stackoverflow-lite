@@ -8,13 +8,14 @@ from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app)
+CORS(api)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 auth = HTTPBasicAuth()
 
 
 class Home(Resource):
     '''Api for the homepage'''
+    @app.route('/api/v1')
     @cross_origin()
     def get(self):
         '''method for getting the homepage'''
@@ -22,6 +23,7 @@ class Home(Resource):
 
 
 class Register(Resource):
+    @app.route('/api/v1/register')
     @cross_origin()
     def post(self):
         name = request.get_json()['name' ]
@@ -45,6 +47,7 @@ class Register(Resource):
 
 
 class Login(Resource):
+    @app.route('/api/v1/login')
     @cross_origin()
     def post(self):
         username = request.get_json()['username']
@@ -78,6 +81,7 @@ class Login(Resource):
 
 class AllQuestionsAPI(Resource):
     '''Api for the questions posted'''
+    @app.route('/api/v1/questions/')
     @cross_origin()
     def get(self):
         result = cur.execute("SELECT * FROM questions;")
@@ -90,6 +94,7 @@ class AllQuestionsAPI(Resource):
             return {'message': error}
 
 
+    @app.route('/api/v1/questions')
     @cross_origin()
     def post(self):
         '''API method for creating a question'''
@@ -111,6 +116,7 @@ class AllQuestionsAPI(Resource):
 class QuestionAPI(Resource):
     # decorators  = [auth.login_required]
     '''Api for getting a particular question'''
+    @app.route('/api/v1/questions')
     @cross_origin()
     def get(self, id):
         '''API method for getting a question'''
@@ -123,6 +129,7 @@ class QuestionAPI(Resource):
             error = "No question with that id exists"
             return jsonify({"message": error})
 
+    @app.route('/api/v1/questions/<int:id>')
     @cross_origin()
     def put(self, id):
         '''API method for updating a question'''
@@ -137,6 +144,7 @@ class QuestionAPI(Resource):
         success = 'Question updated successfully'
         return jsonify({'message': success})
 
+    @app.route('/api/v1/questions/<int:id>')
     @cross_origin()
     def delete(self, id):
         '''API method for deleting a question'''
@@ -148,6 +156,7 @@ class QuestionAPI(Resource):
 
 class AllAnswersAPI(Resource):
     '''Api for the answers given to a particular question'''
+    @app.route('/api/v1/answers')
     @cross_origin()
     def get(self, id):
         cur.execute('SELECT * FROM answers WHERE id={}'.format(id))
@@ -160,6 +169,7 @@ class AllAnswersAPI(Resource):
 class AnswerAPI(Resource):
     decorators  = [auth.login_required]
     '''Api for getting a particular answer to a question'''
+    @app.route('/api/v1/answers/<int:id>/')
     @cross_origin()
     def get(self, id):
         '''API method for getting an answer'''
@@ -168,6 +178,7 @@ class AnswerAPI(Resource):
         success = 'Answer retrived successfully'
         return jsonify ({'message': success}, { answer })
 
+    @app.route('/api/v1/answers/<int:id>')
     @cross_origin()
     def put(self, id):
         '''API method for updating an answer'''
@@ -182,6 +193,7 @@ class AnswerAPI(Resource):
         success = 'Successfully edited your answer'
         return { 'message': success }
 
+    @app.route('/api/v1/answers/<int:id>/')
     @cross_origin()
     def delete(self, id):
         '''API method for deleting an answer'''
@@ -194,6 +206,7 @@ class AnswerAPI(Resource):
 
 class AllCommentsAPI(Resource):
     '''Api for the comments posted per post'''
+    @app.route('/api/v1/comments')
     @cross_origin()
     def get(self, id):
         pass
@@ -202,28 +215,25 @@ class AllCommentsAPI(Resource):
 class CommentAPI(Resource):
     decorators  = [auth.login_required]
     '''Api for getting a particular comment to an answer of a question'''
+    @app.route('/api/v1comment')
     @cross_origin()
     def get(self, id):
         '''API method for getting a comment'''
         pass
 
+    @app.route('/api/v1/comment/<int:id>/')
     @cross_origin()
     def put(self, id):
         '''API method for updating a comment'''
         pass
+
+    @app.route('/api/v1/comment/<int:id>/')
     @cross_origin()
     def delete(self, id):
         '''API method for deleting a comment'''
         pass
 
 
-api.add_resource(Home, '/api/v1', endpoint = 'homepage')
-api.add_resource(AllQuestionsAPI, '/api/v1/questions', endpoint = 'questions')
-api.add_resource(QuestionAPI, '/api/v1/questions/<int:id>', endpoint='question')
-api.add_resource(AllAnswersAPI, '/api/v1/answers/', endpoint = 'answers')
-api.add_resource(AnswerAPI, '/api/v1/answer/<int:id>', endpoint = 'answer')
-api.add_resource(Register, '/api/v1/auth/register')
-api.add_resource(Login, '/api/v1/auth/login')
 if __name__ == '__main__':
     app.run(debug=True)
 
