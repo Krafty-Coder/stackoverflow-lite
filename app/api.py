@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request, session, render_template
 from flask_restful import Resource, Api
 from app.models import *
 from flask_httpauth import HTTPBasicAuth
