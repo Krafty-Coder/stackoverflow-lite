@@ -58,7 +58,6 @@ class Login(Resource):
 
             # Compare Passwords
             conn.close()
-            cur.close()
             if sha256_crypt.verify(password_candidate, password):
                 # Password and username matches
                 session['logged_in'] = True
