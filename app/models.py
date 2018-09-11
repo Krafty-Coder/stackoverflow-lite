@@ -25,3 +25,5 @@ cur.execute('''CREATE TABLE IF NOT EXISTS questions(
     description varchar (100) NOT NULL,
     timestamp timestamp default current_timestamp
     ) ''')
+
+conn.close()
