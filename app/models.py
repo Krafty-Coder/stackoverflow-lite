@@ -26,4 +26,3 @@ cur.execute('''CREATE TABLE IF NOT EXISTS questions(
     timestamp timestamp default current_timestamp
     ) ''')
 
-conn.close()
