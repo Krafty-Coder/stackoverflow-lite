@@ -4,7 +4,7 @@ conn = psycopg2.connect("dbname=d35r4tfslcr7uf user=hantjxrfgrzzrr password=d6a3
 cur = conn.cursor()  # Activate connection using the cursor
 
 
-cur.execute('''CREATE TABLE IF NOT EXISTS users(
+cur.execute('''CREATE TABLE users(
     id serial PRIMARY KEY,
     username varchar (50) NOT NULL,
     email varchar (100) NOT NULL,
@@ -13,13 +13,13 @@ cur.execute('''CREATE TABLE IF NOT EXISTS users(
     timestamp timestamp default current_timestamp
     ) ''')
 
-cur.execute('''CREATE TABLE IF NOT EXISTS answers(
+cur.execute('''CREATE TABLE answers(
     id serial PRIMARY KEY,
     description text NOT NULL,
     timestamp timestamp default current_timestamp
     ) ''')
 
-cur.execute('''CREATE TABLE IF NOT EXISTS questions(
+cur.execute('''CREATE TABLE questions(
     id serial PRIMARY KEY,
     title text NOT NULL,
     description text NOT NULL,
