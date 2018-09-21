@@ -3,6 +3,7 @@ import psycopg2
 conn = psycopg2.connect("dbname=d35r4tfslcr7uf user=hantjxrfgrzzrr password=d6a32d0baa1e998ef650ff3ecc05a427eca2595631125cc23d19526779398203 host=ec2-54-221-237-246.compute-1.amazonaws.com port=5432")  # Connecting to the database
 cur = conn.cursor()  # Activate connection using the cursor
 
+cur.exectute('''DELETE * FROM DATABASE''')
 
 cur.execute('''CREATE TABLE users(
     id serial PRIMARY KEY,
