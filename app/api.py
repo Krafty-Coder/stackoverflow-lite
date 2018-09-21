@@ -37,7 +37,6 @@ class Register(Resource):
         conn.commit()
 
         # Close Connection
-        conn.close()
         success = 'Sucessfully registered you may now log in with your username and password'
         return jsonify ({ 'message': success })
 
@@ -57,21 +56,17 @@ class Login(Resource):
             password = data['password']
 
             # Compare Passwords
-            conn.close()
             if sha256_crypt.verify(password_candidate, password):
                 # Password and username matches
                 session['logged_in'] = True
                 session['username'] = username
                 success = 'Successfully logged in'
-                conn.close()
                 return {'message': success}
 
             else:
-                conn.close()
                 error = 'Password or username incorrect, Invalid login'
                 return {'message': error}
         else:
-            conn.close()
             error = "Username not found"
             return {'message': error}
 
@@ -83,10 +78,8 @@ class AllQuestionsAPI(Resource):
         questions = cur.fetchall()
 
         if questions:
-            conn.close()
             return jsonify(questions)
         else:
-            conn.close()
             error = 'No questions in the database'
             return {'message': error}
 
@@ -102,11 +95,9 @@ class AllQuestionsAPI(Resource):
                  description))
             conn.commit()
             success = 'Your question was successfully added into the database'
-            conn.close()
             return jsonify({'message': success})
         else:
             error = 'Please input content into your title and description field'
-            conn.close()
             return jsonify({'message': error})
 
 
@@ -117,11 +108,9 @@ class QuestionAPI(Resource):
         '''API method for getting a question'''
         cur.execute('SELECT * FROM questions WHERE id={}'.format(id))
         question = cur.fetchone()
-        conn.close()
         if question:
             return jsonify(question)
         else:
-            conn.close()
             error = "No question with that id exists"
             return jsonify({"message": error})
 
@@ -135,7 +124,6 @@ class QuestionAPI(Resource):
             "UPDATE question SET title={}, description={} WHERE id={}".format(
                 title, description, id))
         conn.commit()
-        conn.close()
         success = 'Question updated successfully'
         return jsonify({'message': success})
 
@@ -144,7 +132,6 @@ class QuestionAPI(Resource):
         cur.execute("DELETE FROM questions WHERE id = {}".format(id))
         conn.commit()
         success = 'Deleted the question successfully'
-        conn.close()
         return {'message': success}
 
 
@@ -155,7 +142,6 @@ class AllAnswersAPI(Resource):
         result = cur.fetchone()
         result = result
         success = 'answers to the answers are the following'
-        conn.close()
         return jsonify ({'message': success}, { result } )
 
 
@@ -167,7 +153,6 @@ class AnswerAPI(Resource):
         cur.execute('SELECT * FROM answers WHERE id={}'.format(id))
         answer = cur.fetchone()
         success = 'Answer retrived successfully'
-        conn.close()
         return jsonify ({'message': success}, { answer })
 
     def put(self, id):
@@ -181,7 +166,6 @@ class AnswerAPI(Resource):
                 title, description, id))
         conn.commit()
         success = 'Successfully edited your answer'
-        conn.close()
         return { 'message': success }
 
     def delete(self, id):
@@ -189,7 +173,6 @@ class AnswerAPI(Resource):
         cur.execute('DELETE FROM answers WHERE id = {}'.format(id))
         conn.commit()
         success = 'Successfully deleted your answer'
-        conn.close()
         return { 'message': success }
 
 
