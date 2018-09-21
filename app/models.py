@@ -21,7 +21,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS answers(
 
 cur.execute('''CREATE TABLE IF NOT EXISTS questions(
     id serial PRIMARY KEY,
-    title varchar (50) NOT NULL,
+    title varchar (100) NOT NULL,
     description varchar (1100) NOT NULL,
     timestamp timestamp default current_timestamp
     ) ''')
