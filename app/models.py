@@ -15,14 +15,14 @@ cur.execute('''CREATE TABLE IF NOT EXISTS users(
 
 cur.execute('''CREATE TABLE IF NOT EXISTS answers(
     id serial PRIMARY KEY,
-    description varchar (200) NOT NULL,
+    description text (200) NOT NULL,
     timestamp timestamp default current_timestamp
     ) ''')
 
 cur.execute('''CREATE TABLE IF NOT EXISTS questions(
     id serial PRIMARY KEY,
     title varchar (100) NOT NULL,
-    description varchar (1100) NOT NULL,
+    description text (1100) NOT NULL,
     timestamp timestamp default current_timestamp
     ) ''')
 
