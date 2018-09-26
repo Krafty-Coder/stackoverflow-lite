@@ -2,11 +2,13 @@ from flask import Flask, jsonify, request, session
 from flask_restful import Resource, Api
 from flask_cors import CORS
 from app.models import *
+from app.models import conn
 from flask_httpauth import HTTPBasicAuth
 from passlib.hash import sha256_crypt
 
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 auth = HTTPBasicAuth()
@@ -36,7 +38,6 @@ class Register(Resource):
         conn.commit()
 
         # Close Connection
-        cur.close()
         success = 'Sucessfully registered you may now log in with your username and password'
         return jsonify ({ 'message': success })
 
@@ -56,7 +57,6 @@ class Login(Resource):
             password = data['password']
 
             # Compare Passwords
-            cur.close()
             if sha256_crypt.verify(password_candidate, password):
                 # Password and username matches
                 session['logged_in'] = True
@@ -109,7 +109,6 @@ class QuestionAPI(Resource):
         '''API method for getting a question'''
         cur.execute('SELECT * FROM questions WHERE id={}'.format(id))
         question = cur.fetchone()
-        # cur.close()
         if question:
             return jsonify(question)
         else:
@@ -201,7 +200,7 @@ class CommentAPI(Resource):
         pass
 
 
-api.add_resource(Home, '/api/v1', endpoint = 'homepage')
+api.add_resource(Home, '/', endpoint = 'homepage')
 api.add_resource(AllQuestionsAPI, '/api/v1/questions', endpoint = 'questions')
 api.add_resource(QuestionAPI, '/api/v1/questions/<int:id>', endpoint='question')
 api.add_resource(AllAnswersAPI, '/api/v1/answers/', endpoint = 'answers')
