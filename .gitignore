@@ -2,3 +2,11 @@
 stackoverflow/
 app/__pycache__/
 __pycache__/
+localhostche__/
+app/__init__.pyc
+app/__pycache__/
+app/api.pyc
+config.pyc
+stack/
+*.pyc
+
