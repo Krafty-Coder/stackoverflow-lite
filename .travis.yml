@@ -18,5 +18,7 @@ script:
   - python test_app.py --cov=app -v
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+after_success:
+  - coveralls
 
 
