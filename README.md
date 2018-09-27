@@ -1,5 +1,5 @@
 
-## StackOverflow-lite​ [![Build Status](https://travis-ci.org/Krafty-Coder/stackoverflow-lite.svg?branch=master)](https://travis-ci.org/Krafty-Coder/stackoverflow-lite) [![Maintainability](https://api.codeclimate.com/v1/badges/314f0379f2a2fd2ee665/maintainability)](https://codeclimate.com/github/Krafty-Coder/stackoverflow-lite/maintainability)  [![Test Coverage](https://api.codeclimate.com/v1/badges/314f0379f2a2fd2ee665/test_coverage)](https://codeclimate.com/github/Krafty-Coder/stackoverflow-lite/test_coverage)
+## StackOverflow-lite​ [![Build Status](https://travis-ci.org/Krafty-Coder/stackoverflow-lite.svg?branch=master)](https://travis-ci.org/Krafty-Coder/stackoverflow-lite) [![Maintainability](https://api.codeclimate.com/v1/badges/314f0379f2a2fd2ee665/maintainability)](https://codeclimate.com/github/Krafty-Coder/stackoverflow-lite/maintainability)  [![ Test Coverage Status](https://coveralls.io/repos/github/Krafty-Coder/stackoverflow-lite/badge.svg?branch=master)](https://coveralls.io/github/Krafty-Coder/stackoverflow-lite?branch=master)
 
 A platform where people can ask questions and provide responses.
 
