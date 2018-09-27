@@ -7,6 +7,7 @@ python:
     # command to install dependencies
 install:
   - pip3 install -r requirements.txt
+  - pip install coveralls
     # command to run tests and test coverals
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -14,7 +15,7 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - cd tests
-  - python test_app.py
+  - python test_app.py --cov=app -v
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
